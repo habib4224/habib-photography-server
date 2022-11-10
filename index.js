@@ -28,7 +28,11 @@ async function run() {
             res.send(services);
         });
 
-
+        app.post('/services', async (req, res) => {
+            const services = req.body;
+            const result = await serviceCollection.insertOne(services);
+            res.send(result);
+        });
 
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
