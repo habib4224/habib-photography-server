@@ -24,7 +24,7 @@ async function run() {
         app.get('/services', async (req, res) => {
             const query = {}
             const cursor = serviceCollection.find(query)
-            const services = await cursor.limit(3).toArray();
+            const services = await cursor.toArray();
             res.send(services);
         });
 
@@ -64,7 +64,7 @@ async function run() {
             const result = await reviewService.insertOne(review);
             res.send(result);
 
-        })
+        });
         app.patch('/reviews/:id', async (req, res) => {
             const id = req.params.id;
             const status = req.body.status;
@@ -76,7 +76,7 @@ async function run() {
             }
             const result = await reviewService.updateOne(query, updatedDoc);
             res.send(result);
-        })
+        });
         app.delete('/reviews/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
