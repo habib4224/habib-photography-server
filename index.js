@@ -28,6 +28,7 @@ async function run() {
             res.send(services);
         });
 
+
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -37,49 +38,7 @@ async function run() {
 
         })
 
-        app.get('/reviews', async (req, res) => {
 
-
-            let query = {};
-            if (req.query.email) {
-                query = {
-                    email: req.query.email
-                }
-            }
-            const cursor = reviewService.find(query);
-            const review = await cursor.toArray();
-            res.send(review);
-
-
-        });
-        app.post('/reviews', async (req, res) => {
-
-            const review = req.body;
-            const result = await reviewService.insertOne(review);
-            res.send(result);
-
-        })
-
-        app.patch('/reviews/:id', async (req, res) => {
-            const id = req.params.id;
-            const status = req.body.status;
-            const query = { _id: ObjectId(id) }
-            const updatedDoc = {
-                $set: {
-                    status: status
-                }
-            }
-            const result = await reviewService.updateOne(query, updatedDoc);
-            res.send(result);
-        })
-
-
-        app.delete('/reviews/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) }
-            const result = await reviewService.deleteOne(query);
-            res.send(result);
-        })
     }
     finally {
 
